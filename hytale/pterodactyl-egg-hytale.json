@@ -13,7 +13,7 @@
     "Hytale": "ghcr.io/pelican-eggs/games:hytale"
   },
   "file_denylist": [],
-  "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 {{AOT_FLAG}} {{COMPACT_HEADERS_FLAG}} -Djava.io.tmpdir=/home/container/.tmp -Dterminal.jline=false -Dterminal.ansi=true -jar HytaleServer.jar {{ALLOW_OP_FLAG}} {{ACCEPT_EARLY_PLUGINS_FLAG}} {{DISABLE_SENTRY_FLAG}} --bind 0.0.0.0:{{SERVER_PORT}} --assets ../{{ASSETS_PATH}} {{BACKUP_FLAG}}",
+  "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 {{AOT_FLAG}} {{COMPACT_HEADERS_FLAG}} -Djava.io.tmpdir=/home/container/.tmp -Dterminal.jline=false -Dterminal.ansi=true -jar HytaleServer.jar {{ALLOW_OP_FLAG}} {{ACCEPT_EARLY_PLUGINS_FLAG}} {{DISABLE_SENTRY_FLAG}} --bind 0.0.0.0:{{SERVER_PORT}} --assets ../Assets.zip {{BACKUP_FLAG}}",
   "config": {
     "files": "[]",
     "startup": "{\n    \"done\": \"Hytale Server Booted!\"\n}",
@@ -69,16 +69,6 @@
       "field_type": "text"
     },
     {
-      "name": "Assets Path",
-      "description": "Path to assets zip file.",
-      "env_variable": "ASSETS_PATH",
-      "default_value": "Assets.zip",
-      "user_viewable": true,
-      "user_editable": true,
-      "rules": "required|string",
-      "field_type": "text"
-    },
-    {
       "name": "Enable World Backups",
       "description": "Enable automatic world backups by the game server.",
       "env_variable": "ENABLE_WORLD_BACKUP",
@@ -90,7 +80,7 @@
     },
     {
       "name": "Enable Server Backup",
-      "description": "Store a backup of the previous server version on update or patchline change (single rollback slot per patchline, configurable via SERVER_BACKUP_RETENTION).",
+      "description": "Store a backup of the previous server version on update or patchline change.",
       "env_variable": "ENABLE_SERVER_BACKUP",
       "default_value": "1",
       "user_viewable": true,
@@ -105,7 +95,7 @@
       "default_value": "2",
       "user_viewable": true,
       "user_editable": true,
-      "rules": "integer|required",
+      "rules": "integer|required|in:1,2,3,4,5,6,7,8,9,10",
       "field_type": "text"
     },
     {

@@ -17,7 +17,7 @@ docker_images:
   Hytale: 'ghcr.io/pelican-eggs/games:hytale'
 file_denylist: {}
 startup_commands:
-  Default: 'java -Xms128M -XX:MaxRAMPercentage=95.0 {{AOT_FLAG}} {{COMPACT_HEADERS_FLAG}} -Djava.io.tmpdir=/home/container/.tmp -Dterminal.jline=false -Dterminal.ansi=true -jar HytaleServer.jar {{ALLOW_OP_FLAG}} {{ACCEPT_EARLY_PLUGINS_FLAG}} {{DISABLE_SENTRY_FLAG}} --bind 0.0.0.0:{{SERVER_PORT}} --assets ../{{ASSETS_PATH}} {{BACKUP_FLAG}}'
+  Default: 'java -Xms128M -XX:MaxRAMPercentage=95.0 {{AOT_FLAG}} {{COMPACT_HEADERS_FLAG}} -Djava.io.tmpdir=/home/container/.tmp -Dterminal.jline=false -Dterminal.ansi=true -jar HytaleServer.jar {{ALLOW_OP_FLAG}} {{ACCEPT_EARLY_PLUGINS_FLAG}} {{DISABLE_SENTRY_FLAG}} --bind 0.0.0.0:{{SERVER_PORT}} --assets ../Assets.zip {{BACKUP_FLAG}}'
 config:
   files: {}
   startup:
@@ -176,16 +176,6 @@ variables:
     rules:
       - boolean
   - sort: 5
-    name: 'Assets Path'
-    description: 'Path to assets zip file.'
-    env_variable: ASSETS_PATH
-    default_value: Assets.zip
-    user_viewable: true
-    user_editable: true
-    rules:
-      - required
-      - string
-  - sort: 6
     name: 'Enable World Backups'
     description: 'Enable automatic world backups by the game server.'
     env_variable: ENABLE_WORLD_BACKUP
@@ -194,16 +184,16 @@ variables:
     user_editable: true
     rules:
       - boolean
-  - sort: 7
+  - sort: 6
     name: 'Enable Server Backup'
-    description: 'Store a backup of the previous server version on update or patchline change (single rollback slot per patchline, configurable via SERVER_BACKUP_RETENTION).'
+    description: 'Store a backup of the previous server version on update or patchline change.'
     env_variable: ENABLE_SERVER_BACKUP
     default_value: 1
     user_viewable: true
     user_editable: true
     rules:
       - boolean
-  - sort: 8
+  - sort: 7
     name: 'Server Backup Retention'
     description: 'Number of server version backups to retain per patchline.'
     env_variable: SERVER_BACKUP_RETENTION
@@ -213,7 +203,9 @@ variables:
     rules:
       - integer
       - required
-  - sort: 9
+      - 'in:1,2,3,4,5,6,7,8,9,10'
+
+  - sort: 8
     name: 'Backup Directory'
     description: 'Directory for world backups.'
     env_variable: BACKUP_DIR
@@ -223,7 +215,7 @@ variables:
     rules:
       - required
       - string
-  - sort: 10
+  - sort: 9
     name: 'Backup Frequency'
     description: 'Backup interval in minutes.'
     env_variable: BACKUP_FREQUENCY
@@ -233,7 +225,7 @@ variables:
     rules:
       - integer
       - required
-  - sort: 11
+  - sort: 10
     name: 'Backup Max Count'
     description: 'Maximum number of world backups.'
     env_variable: BACKUP_MAX_COUNT
@@ -242,7 +234,7 @@ variables:
     user_editable: true
     rules:
       - integer
-  - sort: 12
+  - sort: 11
     name: 'Backup Archive Max Count'
     description: 'Maximum number of backup archives.'
     env_variable: BACKUP_ARCHIVE_MAX_COUNT
@@ -251,7 +243,7 @@ variables:
     user_editable: true
     rules:
       - integer
-  - sort: 13
+  - sort: 12
     name: 'Use AOT Cache'
     description: 'Enable Ahead-Of-Time compilation cache for faster startup.'
     env_variable: USE_AOT_CACHE
@@ -260,7 +252,7 @@ variables:
     user_editable: true
     rules:
       - boolean
-  - sort: 14
+  - sort: 13
     name: 'Compact Object Headers'
     description: 'Enable JVM compact object headers for reduced memory usage.'
     env_variable: USE_COMPACT_HEADERS
@@ -269,7 +261,7 @@ variables:
     user_editable: true
     rules:
       - boolean
-  - sort: 15
+  - sort: 14
     name: 'Allow Self-OP'
     description: 'Allow players to use /op self to grant themselves operator permissions.'
     env_variable: ALLOW_OP
@@ -278,7 +270,7 @@ variables:
     user_editable: true
     rules:
       - boolean
-  - sort: 16
+  - sort: 15
     name: 'Load Early Plugins'
     description: 'Loads binary injection plugins for the server, enable only if you understand the stability risks.'
     env_variable: ACCEPT_EARLY_PLUGINS
@@ -287,7 +279,7 @@ variables:
     user_editable: true
     rules:
       - boolean
-  - sort: 17
+  - sort: 16
     name: 'Disable Sentry'
     description: 'Disable Sentry error reporting and telemetry.'
     env_variable: DISABLE_SENTRY
@@ -296,7 +288,7 @@ variables:
     user_editable: true
     rules:
       - boolean
-  - sort: 18
+  - sort: 17
     name: 'Downloader Timeout'
     description: 'Maximum time in seconds for server file downloads, increase for slow connections.'
     env_variable: DOWNLOADER_TIMEOUT
@@ -305,7 +297,7 @@ variables:
     user_editable: true
     rules:
       - integer
-  - sort: 19
+  - sort: 18
     name: 'Profile UUID'
     description: 'Specify a specific Hytale profile UUID for the servers session.'
     env_variable: HYTALE_PROFILE_UUID
