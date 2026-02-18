@@ -17,7 +17,7 @@ docker_images:
   Hytale: 'ghcr.io/pelican-eggs/games:hytale'
 file_denylist: {}
 startup_commands:
-  Default: 'java -Xms128M -XX:MaxRAMPercentage=95.0 {{AOT_FLAG}} {{COMPACT_HEADERS_FLAG}} -Djava.io.tmpdir=/home/container/.tmp -Dterminal.jline=false -Dterminal.ansi=true -jar HytaleServer.jar {{ALLOW_OP_FLAG}} {{ACCEPT_EARLY_PLUGINS_FLAG}} {{DISABLE_SENTRY_FLAG}} --bind 0.0.0.0:{{SERVER_PORT}} --assets ../Assets.zip {{BACKUP_FLAG}}'
+  Default: 'java -Xms128M -XX:MaxRAMPercentage=95.0 {{AOT_FLAG}} {{COMPACT_HEADERS_FLAG}} -Djava.io.tmpdir=/home/container/.tmp -Dterminal.jline=false -Dterminal.ansi=true -jar HytaleServer.jar {{ALLOW_OP_FLAG}} {{ACCEPT_EARLY_PLUGINS_FLAG}} {{DISABLE_SENTRY_FLAG}} {{SKIP_MOD_VALIDATION_FLAG}} --bind 0.0.0.0:{{SERVER_PORT}} --assets ../Assets.zip {{BACKUP_FLAG}}'
 config:
   files: {}
   startup:
@@ -46,7 +46,7 @@ scripts:
       echo '[2/2] Creating config.json...'
       cat > /mnt/server/Server/config.json << 'EOF'
       {
-        "Version": 3,
+        "Version": 4,
         "ServerName": "Hytale Server",
         "MOTD": "",
         "Password": "",
@@ -235,6 +235,15 @@ variables:
     rules:
       - integer
   - sort: 11
+    name: 'Backup Archive Max Count'
+    description: 'Maximum number of backup archives to retain.'
+    env_variable: BACKUP_ARCHIVE_MAX_COUNT
+    default_value: 5
+    user_viewable: true
+    user_editable: true
+    rules:
+      - integer
+  - sort: 12
     name: 'Use AOT Cache'
     description: 'Enable Ahead-Of-Time compilation cache for faster startup.'
     env_variable: USE_AOT_CACHE
@@ -243,7 +252,7 @@ variables:
     user_editable: true
     rules:
       - boolean
-  - sort: 12
+  - sort: 13
     name: 'Compact Object Headers'
     description: 'Enable JVM compact object headers for reduced memory usage.'
     env_variable: USE_COMPACT_HEADERS
@@ -252,7 +261,7 @@ variables:
     user_editable: true
     rules:
       - boolean
-  - sort: 13
+  - sort: 14
     name: 'Allow Self-OP'
     description: 'Allow players to use /op self to grant themselves operator permissions.'
     env_variable: ALLOW_OP
@@ -261,7 +270,7 @@ variables:
     user_editable: true
     rules:
       - boolean
-  - sort: 14
+  - sort: 15
     name: 'Load Early Plugins'
     description: 'Loads binary injection plugins for the server, enable only if you understand the stability risks.'
     env_variable: ACCEPT_EARLY_PLUGINS
@@ -270,7 +279,7 @@ variables:
     user_editable: true
     rules:
       - boolean
-  - sort: 15
+  - sort: 16
     name: 'Disable Sentry'
     description: 'Disable Sentry error reporting and telemetry.'
     env_variable: DISABLE_SENTRY
@@ -279,7 +288,16 @@ variables:
     user_editable: true
     rules:
       - boolean
-  - sort: 16
+  - sort: 17
+    name: 'Skip Mod Validation'
+    description: 'Skip mod validation, allowing the server to boot even if a mod fails to load.'
+    env_variable: SKIP_MOD_VALIDATION
+    default_value: 0
+    user_viewable: true
+    user_editable: true
+    rules:
+      - boolean
+  - sort: 18
     name: 'Downloader Timeout'
     description: 'Maximum time in seconds for server file downloads, increase for slow connections.'
     env_variable: DOWNLOADER_TIMEOUT
@@ -288,7 +306,7 @@ variables:
     user_editable: true
     rules:
       - integer
-  - sort: 17
+  - sort: 19
     name: 'Profile UUID'
     description: 'Specify a specific Hytale profile UUID for the servers session.'
     env_variable: HYTALE_PROFILE_UUID

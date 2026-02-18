@@ -13,7 +13,7 @@
     "Hytale": "ghcr.io/pelican-eggs/games:hytale"
   },
   "file_denylist": [],
-  "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 {{AOT_FLAG}} {{COMPACT_HEADERS_FLAG}} -Djava.io.tmpdir=/home/container/.tmp -Dterminal.jline=false -Dterminal.ansi=true -jar HytaleServer.jar {{ALLOW_OP_FLAG}} {{ACCEPT_EARLY_PLUGINS_FLAG}} {{DISABLE_SENTRY_FLAG}} --bind 0.0.0.0:{{SERVER_PORT}} --assets ../Assets.zip {{BACKUP_FLAG}}",
+  "startup": "java -Xms128M -XX:MaxRAMPercentage=95.0 {{AOT_FLAG}} {{COMPACT_HEADERS_FLAG}} -Djava.io.tmpdir=/home/container/.tmp -Dterminal.jline=false -Dterminal.ansi=true -jar HytaleServer.jar {{ALLOW_OP_FLAG}} {{ACCEPT_EARLY_PLUGINS_FLAG}} {{DISABLE_SENTRY_FLAG}} {{SKIP_MOD_VALIDATION_FLAG}} --bind 0.0.0.0:{{SERVER_PORT}} --assets ../Assets.zip {{BACKUP_FLAG}}",
   "config": {
     "files": "[]",
     "startup": "{\n    \"done\": \"Hytale Server Booted!\"\n}",
@@ -22,7 +22,7 @@
   },
   "scripts": {
     "installation": {
-      "script": "#!/bin/bash\nset -e\n\necho '============================================'\necho 'Hytale Server Installation'\necho '============================================'\n\necho '[1/2] Creating directories...'\nmkdir -p /mnt/server/.tmp\nmkdir -p /mnt/server/Backups\nmkdir -p /mnt/server/Server/mods\nmkdir -p /mnt/server/Server/earlyplugins\nmkdir -p /mnt/server/.server-backups/release\nmkdir -p /mnt/server/.server-backups/pre-release\necho '  \u2713 Directories created'\n\necho '[2/2] Creating config.json...'\ncat > /mnt/server/Server/config.json << 'EOF'\n{\n  \"Version\": 3,\n  \"ServerName\": \"Hytale Server\",\n  \"MOTD\": \"\",\n  \"Password\": \"\",\n  \"MaxPlayers\": 20,\n  \"MaxViewRadius\": 12,\n  \"Defaults\": {\n    \"World\": \"default\",\n    \"GameMode\": \"Adventure\"\n  },\n  \"ConnectionTimeouts\": {\n    \"InitialTimeout\": \"PT1M\",\n    \"AuthTimeout\": \"PT1M30S\"\n  },\n  \"RateLimit\": {},\n  \"Modules\": {},\n  \"LogLevels\": {\n    \"AssetModule|P\": \"SEVERE\",\n    \"AssetRegistryLoader\": \"SEVERE\",\n    \"AssetStore|AssignmentsAsset\": \"SEVERE\",\n    \"AssetStore|BiomeAsset\": \"SEVERE\",\n    \"AssetStore|BlockType\": \"SEVERE\",\n    \"AssetStore|CustomConnectedBlockTemplateAsset\": \"SEVERE\",\n    \"AssetStore|EntityEffect\": \"SEVERE\",\n    \"AssetStore|Environment\": \"SEVERE\",\n    \"AssetStore|GameplayConfig\": \"SEVERE\",\n    \"AssetStore|Interaction\": \"SEVERE\",\n    \"AssetStore|Item\": \"SEVERE\",\n    \"AssetStore|ModelVFX\": \"SEVERE\",\n    \"AssetStore|ParticleSystem\": \"SEVERE\",\n    \"AssetStore|PrefabListAsset\": \"SEVERE\",\n    \"AssetStore|ScriptedBrushAsset\": \"SEVERE\",\n    \"AssetStore|WorldStructureAsset\": \"SEVERE\",\n    \"BarterShopState\": \"SEVERE\",\n    \"BlockSetModule|P\": \"SEVERE\",\n    \"BuilderToolsPacketHandler\": \"SEVERE\",\n    \"CertificateUtil\": \"SEVERE\",\n    \"CollisionModule|P\": \"SEVERE\",\n    \"CommonAssetModule|P\": \"SEVERE\",\n    \"ConsoleModule|P\": \"SEVERE\",\n    \"EncryptedAuthCredentialStore\": \"SEVERE\",\n    \"Entity\": \"SEVERE\",\n    \"HandshakeHandler\": \"SEVERE\",\n    \"Hytale\": \"SEVERE\",\n    \"HytaleGenerator\": \"SEVERE\",\n    \"HytaleGenerator|P\": \"SEVERE\",\n    \"HytaleServer\": \"INFO\",\n    \"I18nModule|P\": \"SEVERE\",\n    \"JWTValidator\": \"SEVERE\",\n    \"LoginTiming\": \"SEVERE\",\n    \"MacroCommandBase\": \"SEVERE\",\n    \"NPC|P\": \"SEVERE\",\n    \"PasswordPacketHandler\": \"SEVERE\",\n    \"PathWatcherThread\": \"SEVERE\",\n    \"PlayerSavingSystems\": \"SEVERE\",\n    \"PluginExample|P\": \"INFO\",\n    \"PluginManager\": \"INFO\",\n    \"QUICTransport\": \"SEVERE\",\n    \"SERR\": \"SEVERE\",\n    \"ServerAuthManager\": \"SEVERE\",\n    \"ServerManager|P\": \"SEVERE\",\n    \"SessionServiceClient\": \"SEVERE\",\n    \"Shop|P\": \"SEVERE\",\n    \"Spawning|P\": \"SEVERE\",\n    \"Teleport|P\": \"SEVERE\",\n    \"Universe|P\": \"SEVERE\",\n    \"World|default\": \"SEVERE\",\n    \"World|default|M\": \"SEVERE\",\n    \"WorldGenerator\": \"SEVERE\",\n    \"WorldMapTracker\": \"SEVERE\"\n  },\n  \"Mods\": {},\n  \"DisplayTmpTagsInStrings\": false,\n  \"PlayerStorage\": {\n    \"Type\": \"Hytale\"\n  },\n  \"Update\": {}\n}\nEOF\necho '  \u2713 config.json created'\n\necho 'Installation complete!'\necho '============================================'\necho 'Installed components:'\necho '  - Base directories'\necho '  - config.json'\necho '============================================'",
+      "script": "#!/bin/bash\nset -e\n\necho '============================================'\necho 'Hytale Server Installation'\necho '============================================'\n\necho '[1/2] Creating directories...'\nmkdir -p /mnt/server/.tmp\nmkdir -p /mnt/server/Backups\nmkdir -p /mnt/server/Server/mods\nmkdir -p /mnt/server/Server/earlyplugins\nmkdir -p /mnt/server/.server-backups/release\nmkdir -p /mnt/server/.server-backups/pre-release\necho '  \u2713 Directories created'\n\necho '[2/2] Creating config.json...'\ncat > /mnt/server/Server/config.json << 'EOF'\n{\n  \"Version\": 4,\n  \"ServerName\": \"Hytale Server\",\n  \"MOTD\": \"\",\n  \"Password\": \"\",\n  \"MaxPlayers\": 20,\n  \"MaxViewRadius\": 12,\n  \"Defaults\": {\n    \"World\": \"default\",\n    \"GameMode\": \"Adventure\"\n  },\n  \"ConnectionTimeouts\": {\n    \"InitialTimeout\": \"PT1M\",\n    \"AuthTimeout\": \"PT1M30S\"\n  },\n  \"RateLimit\": {},\n  \"Modules\": {},\n  \"LogLevels\": {\n    \"AssetModule|P\": \"SEVERE\",\n    \"AssetRegistryLoader\": \"SEVERE\",\n    \"AssetStore|AssignmentsAsset\": \"SEVERE\",\n    \"AssetStore|BiomeAsset\": \"SEVERE\",\n    \"AssetStore|BlockType\": \"SEVERE\",\n    \"AssetStore|CustomConnectedBlockTemplateAsset\": \"SEVERE\",\n    \"AssetStore|EntityEffect\": \"SEVERE\",\n    \"AssetStore|Environment\": \"SEVERE\",\n    \"AssetStore|GameplayConfig\": \"SEVERE\",\n    \"AssetStore|Interaction\": \"SEVERE\",\n    \"AssetStore|Item\": \"SEVERE\",\n    \"AssetStore|ModelVFX\": \"SEVERE\",\n    \"AssetStore|ParticleSystem\": \"SEVERE\",\n    \"AssetStore|PrefabListAsset\": \"SEVERE\",\n    \"AssetStore|ScriptedBrushAsset\": \"SEVERE\",\n    \"AssetStore|WorldStructureAsset\": \"SEVERE\",\n    \"BarterShopState\": \"SEVERE\",\n    \"BlockSetModule|P\": \"SEVERE\",\n    \"BuilderToolsPacketHandler\": \"SEVERE\",\n    \"CertificateUtil\": \"SEVERE\",\n    \"CollisionModule|P\": \"SEVERE\",\n    \"CommonAssetModule|P\": \"SEVERE\",\n    \"ConsoleModule|P\": \"SEVERE\",\n    \"EncryptedAuthCredentialStore\": \"SEVERE\",\n    \"Entity\": \"SEVERE\",\n    \"HandshakeHandler\": \"SEVERE\",\n    \"Hytale\": \"SEVERE\",\n    \"HytaleGenerator\": \"SEVERE\",\n    \"HytaleGenerator|P\": \"SEVERE\",\n    \"HytaleServer\": \"INFO\",\n    \"I18nModule|P\": \"SEVERE\",\n    \"JWTValidator\": \"SEVERE\",\n    \"LoginTiming\": \"SEVERE\",\n    \"MacroCommandBase\": \"SEVERE\",\n    \"NPC|P\": \"SEVERE\",\n    \"PasswordPacketHandler\": \"SEVERE\",\n    \"PathWatcherThread\": \"SEVERE\",\n    \"PlayerSavingSystems\": \"SEVERE\",\n    \"PluginExample|P\": \"INFO\",\n    \"PluginManager\": \"INFO\",\n    \"QUICTransport\": \"SEVERE\",\n    \"SERR\": \"SEVERE\",\n    \"ServerAuthManager\": \"SEVERE\",\n    \"ServerManager|P\": \"SEVERE\",\n    \"SessionServiceClient\": \"SEVERE\",\n    \"Shop|P\": \"SEVERE\",\n    \"Spawning|P\": \"SEVERE\",\n    \"Teleport|P\": \"SEVERE\",\n    \"Universe|P\": \"SEVERE\",\n    \"World|default\": \"SEVERE\",\n    \"World|default|M\": \"SEVERE\",\n    \"WorldGenerator\": \"SEVERE\",\n    \"WorldMapTracker\": \"SEVERE\"\n  },\n  \"Mods\": {},\n  \"DisplayTmpTagsInStrings\": false,\n  \"PlayerStorage\": {\n    \"Type\": \"Hytale\"\n  },\n  \"Update\": {}\n}\nEOF\necho '  \u2713 config.json created'\n\necho 'Installation complete!'\necho '============================================'\necho 'Installed components:'\necho '  - Base directories'\necho '  - config.json'\necho '============================================'",
       "container": "ghcr.io/pelican-eggs/installers:debian",
       "entrypoint": "bash"
     }
@@ -129,6 +129,16 @@
       "field_type": "text"
     },
     {
+      "name": "Backup Archive Max Count",
+      "description": "Maximum number of backup archives to retain.",
+      "env_variable": "BACKUP_ARCHIVE_MAX_COUNT",
+      "default_value": "5",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "integer",
+      "field_type": "text"
+    },
+    {
       "name": "Use AOT Cache",
       "description": "Enable Ahead-Of-Time compilation cache for faster startup.",
       "env_variable": "USE_AOT_CACHE",
@@ -172,6 +182,16 @@
       "name": "Disable Sentry",
       "description": "Disable Sentry error reporting and telemetry.",
       "env_variable": "DISABLE_SENTRY",
+      "default_value": "0",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "boolean",
+      "field_type": "text"
+    },
+    {
+      "name": "Skip Mod Validation",
+      "description": "Skip mod validation, allowing the server to boot even if a mod fails to load.",
+      "env_variable": "SKIP_MOD_VALIDATION",
       "default_value": "0",
       "user_viewable": true,
       "user_editable": true,
