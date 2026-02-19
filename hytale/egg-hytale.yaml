@@ -17,7 +17,7 @@ docker_images:
   Hytale: 'ghcr.io/pelican-eggs/games:hytale'
 file_denylist: {}
 startup_commands:
-  Default: 'java -Xms128M -XX:MaxRAMPercentage=95.0 {{AOT_FLAG}} {{COMPACT_HEADERS_FLAG}} -Djava.io.tmpdir=/home/container/.tmp -Dterminal.jline=false -Dterminal.ansi=true -jar HytaleServer.jar {{ALLOW_OP_FLAG}} {{ACCEPT_EARLY_PLUGINS_FLAG}} {{DISABLE_SENTRY_FLAG}} {{SKIP_MOD_VALIDATION_FLAG}} --bind 0.0.0.0:{{SERVER_PORT}} --assets ../Assets.zip {{BACKUP_FLAG}}'
+  Default: 'java -Xms128M -XX:MaxRAMPercentage=95.0 {{AOT_FLAG}} {{COMPACT_HEADERS_FLAG}} -Djava.io.tmpdir=/home/container/.tmp -Dterminal.jline=false -Dterminal.ansi=true -jar HytaleServer.jar {{ALLOW_OP_FLAG}} {{ACCEPT_EARLY_PLUGINS_FLAG}} {{DISABLE_SENTRY_FLAG}} {{SKIP_MOD_VALIDATION_FLAG}} {{TRANSPORT_FLAG}} --bind 0.0.0.0:{{SERVER_PORT}} --assets ../Assets.zip {{BACKUP_FLAG}}'
 config:
   files: {}
   startup:
@@ -298,6 +298,17 @@ variables:
     rules:
       - boolean
   - sort: 18
+    name: 'Transport'
+    description: 'Network transport protocol. QUIC (UDP) is default; use TCP if UDP/QUIC is blocked by your host or network.'
+    env_variable: TRANSPORT
+    default_value: QUIC
+    user_viewable: true
+    user_editable: true
+    rules:
+      - required
+      - string
+      - 'in:QUIC,TCP'
+  - sort: 19
     name: 'Downloader Timeout'
     description: 'Maximum time in seconds for server file downloads, increase for slow connections.'
     env_variable: DOWNLOADER_TIMEOUT
@@ -306,7 +317,7 @@ variables:
     user_editable: true
     rules:
       - integer
-  - sort: 19
+  - sort: 20
     name: 'Profile UUID'
     description: 'Specify a specific Hytale profile UUID for the servers session.'
     env_variable: HYTALE_PROFILE_UUID
